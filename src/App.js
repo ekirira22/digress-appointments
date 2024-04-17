@@ -1,14 +1,17 @@
 import logo from './logo.svg';
-import './App.css';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar';
+import Home from './components/Home';
+import Guest from './components/Guest';
 
 function App() {
   return (
-    <div className='vh-100 overflow-hidden' id='nav-header'>
-      <NavBar />    
-    </div>
+    <>
+      <NavBar />   
+      <Home />
+      <Guest />
+    </>
   );
 }
 
