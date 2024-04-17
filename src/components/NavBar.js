@@ -34,15 +34,15 @@ export default function NavBar(){
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <Nav>
-                                <Nav.Link className="fw-bold" href="#home">HOME</Nav.Link>
-                                <Nav.Link className="fw-bold" href="#about">ABOUT</Nav.Link>
-                                <Nav.Link className="fw-bold" href="#services">SERVICES</Nav.Link>
-                                <Nav.Link className="fw-bold" href="#contact">CONTACT</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="#home">HOME</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="#about">ABOUT</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="#services">SERVICES</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="#contact">CONTACT</Nav.Link>
 
                             </Nav>
                             <Nav className="ms-4">
-                                <Button variant="success">SIGN UP</Button>
-                                <Button className="ms-2" variant="danger">LOG IN</Button>
+                                <Button variant="transparent border border-white">SIGN UP</Button>
+                                <Button className="ms-2" variant="transparent border border-white">LOG IN</Button>
                             </Nav>
                         </Offcanvas.Body>
                     </Offcanvas>
