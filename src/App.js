@@ -3,14 +3,14 @@ import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
-import Guest from './components/Guest';
+import SignUp from './components/SignUp';
 
 function App() {
   return (
     <>
       <NavBar />   
       <Home />
-      <Guest />
+      <SignUp />
     </>
   );
 }

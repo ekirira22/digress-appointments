@@ -11,7 +11,7 @@ export default function NavBar(){
 
     return (
         <>
-            <Navbar className="p-4 fs-6 text-light" bg="primary" data-bs-theme="dark">
+            <Navbar className="p-4 fs-6 text-light sticky-top top-0" bg="primary" data-bs-theme="dark">
                 <Container>
                     <Navbar.Brand href="#home">
                         <img
