@@ -38,6 +38,7 @@ export default function NavBar(){
                                 <Nav.Link className="fw-semibold" href="/about">ABOUT</Nav.Link>
                                 <Nav.Link className="fw-semibold" href="/services">SERVICES</Nav.Link>
                                 <Nav.Link className="fw-semibold" href="/contact">CONTACT</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="/profile">PROFILE</Nav.Link>
 
                             </Nav>
                             <Nav className="ms-4">
