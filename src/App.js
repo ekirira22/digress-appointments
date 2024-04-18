@@ -7,7 +7,8 @@ import NavBar from './components/NavBar';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
-import Patient from './components/Patient';
+import Patient from './components/Patient';import Profile from './components/Profile'
+
 function App() {
   //Set Errors
   const [errors, setErrors] = useState('')
@@ -29,6 +30,7 @@ function App() {
         <Route path='/signup' element={<SignUp onSignUp={onSignUp}/>} />
         <Route path='/login' element={<Login onLogin={onLogin}/>} />
 
+        <Route path='/profile' element={<Profile />} />
       </Routes>   
       <Patient/>
     </>
