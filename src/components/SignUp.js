@@ -15,21 +15,21 @@ export default function SignUp({onSignUp}){
             username: "",
             email: "",
             password: "",
+            confirm_password: "",
             address: "",
             gender: "",
             doctors_id: "",
             specialization: ""
         },
-        onSubmit : async(values) => {
-            await onSignUp(values, isDoctor)
+        onSubmit : (values) => {
+            onSignUp(values)
+            formik.resetForm()
         }
     })
     useEffect(() => {
         const response = DataFetch("http://localhost:4000/specializations", "GET")
         response.then(specializations => setSpecializations(specializations))
     },[])
-
-    console.log(isDoctor)
 
     return(
         <Container>
@@ -67,8 +67,8 @@ export default function SignUp({onSignUp}){
                     </div>
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input required type="password" name="confirm_password" className="form-control" />
-                            <label className="form-label" htmlFor="confirm_password">Confirm Password</label>
+                            <input required type="password" name="confirm_password" value={formik.values.confirm_password} onChange={formik.handleChange} className="form-control" />
+                            <label className="form-label" htmlFor="confirm_password">Confirm Password </label>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@ export default function SignUp({onSignUp}){
                         <div className="col">
                             <div data-mdb-input-init className="form-outline">
                                 <select className="form-control form-select" name="specialization" value={formik.values.specialization} onChange={formik.handleChange}>
-                                    <option defaultValue={'General Surgery'}>Select an option</option>
+                                    <option defaultValue={''}>Select an option</option>
                                     {
                                         specializations.map(spec => {
                                             return(

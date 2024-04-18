@@ -14,11 +14,26 @@ import Error404 from './components/Error404';
 function App() {
   //Set Errors
   const [errors, setErrors] = useState('')
-  const [user, setUser] = useState('user')
+  const [user, setUser] = useState('')
 
-  const onSignUp = (form_values, isDoctor) => {
-      console.log(form_values, isDoctor)
+  const onSignUp = (form_values) => {
+      fetch(
+        '/signup',
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form_values)
+        }
+      ).then((r) => {
+        if (r.ok) {
+          console.log(r)
+          r.json().then((user) => setUser(user));
+        }
+      })
   }
+  console.log(user)
 
   const onLogin = (form_values, isDoctor) => {
     console.log(form_values, isDoctor)
