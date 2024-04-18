@@ -25,7 +25,7 @@ button.custom-btn:hover{
   border-color: #ffffff;
   color: #61dafb;
 }
-nav a, nav a.active{
+a, nav a, nav a.active{
   text-decoration: none;
 }
 .error{

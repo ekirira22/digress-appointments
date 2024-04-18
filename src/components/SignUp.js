@@ -5,8 +5,8 @@ import { Container } from 'react-bootstrap'
 import DataFetch from "./DataFetch";
 initMDB({ Input, Ripple });
 
-export default function SignUp(){
-    const [doctor, setDoctor] = useState(false)
+export default function SignUp({onSignUp}){
+    const [isDoctor, setDoctor] = useState(false)
     const [specializations, setSpecializations] = useState([])
     const formik = useFormik({
         enableReinitialize : true,
@@ -19,6 +19,9 @@ export default function SignUp(){
             gender: "",
             doctors_id: "",
             specialization: ""
+        },
+        onSubmit : async(values) => {
+            await onSignUp(values, isDoctor)
         }
     })
     useEffect(() => {
@@ -26,44 +29,46 @@ export default function SignUp(){
         response.then(specializations => setSpecializations(specializations))
     },[])
 
+    console.log(isDoctor)
+
     return(
         <Container>
             <form className="sign-up" onSubmit={formik.handleSubmit}>
                 <h2 className="text-center mb-4">Sign up</h2>
-                {/* <!-- 2 column grid layout with text inputs for the first and last names --> */}
+                {/* <!-- 2 column grid layout with text inputs htmlFor the first and last names --> */}
                 <div className="row mb-4">
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input type="text" name="name" value={formik.values.name} onChange={formik.handleChange} className="form-control" />
-                            <label className="form-label" for="name">Full name</label>
+                            <input required type="text" name="name" value={formik.values.name} onChange={formik.handleChange} className="form-control" />
+                            <label className="form-label" htmlFor="name">Full name</label>
                         </div>
                     </div>
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input type="text" name="username" value={formik.values.username} onChange={formik.handleChange} className="form-control" />
-                            <label className="form-label" for="username">Alias /Username</label>
+                            <input required type="text" name="username" value={formik.values.username} onChange={formik.handleChange} className="form-control" />
+                            <label className="form-label" htmlFor="username">Alias /Username</label>
                         </div>
                     </div>
                 </div>
 
                 {/* <!-- Email input --> */}
                 <div data-mdb-input-init className="form-outline mb-4">
-                    <input type="email" name="email" value={formik.values.email} onChange={formik.handleChange} className="form-control" />
-                    <label className="form-label" for="email">Email address</label>
+                    <input required type="email" name="email" value={formik.values.email} onChange={formik.handleChange} className="form-control" />
+                    <label className="form-label" htmlFor="email">Email address</label>
                 </div>
 
                 {/* <!-- Password input --> */}
                 <div className="row mb-4">
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input type="password" name="password" value={formik.values.password} onChange={formik.handleChange} className="form-control" />
-                            <label className="form-label" for="password">Password</label>
+                            <input required type="password" name="password" value={formik.values.password} onChange={formik.handleChange} className="form-control" />
+                            <label className="form-label" htmlFor="password">Password</label>
                         </div>
                     </div>
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input type="password" name="confirm_password" className="form-control" />
-                            <label className="form-label" for="confirm_password">Confirm Password</label>
+                            <input required type="password" name="confirm_password" className="form-control" />
+                            <label className="form-label" htmlFor="confirm_password">Confirm Password</label>
                         </div>
                     </div>
                 </div>
@@ -72,43 +77,43 @@ export default function SignUp(){
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
                             <input type="text" name="address" value={formik.values.address} onChange={formik.handleChange} className="form-control" />
-                            <label className="form-label" for="address">Address</label>
+                            <label className="form-label" htmlFor="address">Address</label>
                         </div>
                     </div>
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <select className="form-control form-select" name="gender" value={formik.values.gender} onChange={formik.handleChange}>
-                                <option selected>Select an option</option>
+                            <select required className="form-control form-select" name="gender" value={formik.values.gender} onChange={formik.handleChange}>
+                                <option defaultValue={'M'}>Select an option</option>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
                             </select>
-                            <label className="form-label" for="gender">Gender</label>
+                            <label className="form-label" htmlFor="gender">Gender</label>
                         </div>
                     </div>
                 </div>
                 
                 {/* <!-- Checkbox --> */}
                 <div className="form-check d-flex justify-content-center mb-4">
-                    <input className="form-check-input me-2" type="checkbox" name="doctor" onClick={() => setDoctor(!doctor)}/>
-                    <label className="form-check-label" for="doctor">
+                    <input className="form-check-input me-2" type="checkbox" name="isDoctor" onClick={() => setDoctor(!isDoctor)}/>
+                    <label className="form-check-label" htmlFor="isDoctor">
                         Register as Doctor
                     </label>
                 </div>
 
-                {/* If they're registered as a doctor  */}
+                {/* If they're registered as a isDoctor  */}
 
-                {!doctor ? null :
+                {!isDoctor ? null :
                     <div className="row mb-4">
                         <div className="col">
                             <div data-mdb-input-init className="form-outline">
                                 <input type="number" name="doctors_id" value={formik.values.doctors_id} onChange={formik.handleChange} className="form-control" />
-                                <label className="form-label" for="doctors_id">Doctor's ID / Practitioner ID</label>
+                                <label className="form-label" htmlFor="doctors_id">Doctor's ID / Practitioner ID</label>
                             </div>
                         </div>
                         <div className="col">
                             <div data-mdb-input-init className="form-outline">
                                 <select className="form-control form-select" name="specialization" value={formik.values.specialization} onChange={formik.handleChange}>
-                                    <option selected>Select an option</option>
+                                    <option defaultValue={'General Surgery'}>Select an option</option>
                                     {
                                         specializations.map(spec => {
                                             return(
@@ -117,14 +122,16 @@ export default function SignUp(){
                                         })
                                     }
                                 </select>
-                                <label className="form-label" for="gender">Specialization</label>
+                                <label className="form-label" htmlFor="gender">Specialization</label>
                             </div>
                         </div>
                     </div>
                 }
 
                 {/* <!-- Submit button --> */}
-                <button data-mdb-ripple-init type="button" className="custom-btn mb-4 text-center">SIGN UP</button>
+                <div className="row mb-4 text-center">
+                    <button data-mdb-ripple-init type="submit" className="custom-btn mb-4 text-center">SIGN UP</button>                    
+                </div>
 
             </form>
         </Container>

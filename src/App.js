@@ -6,10 +6,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
+import Login from './components/Login';
 
 function App() {
   //Set Errors
   const [errors, setErrors] = useState('')
+
+  const onSignUp = (form_values, isDoctor) => {
+      console.log(form_values, isDoctor)
+  }
+
+  const onLogin = (form_values, isDoctor) => {
+    console.log(form_values, isDoctor)
+}
 
   return (
     <>
@@ -17,7 +26,9 @@ function App() {
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/signup' element={<SignUp />} />
+        <Route path='/signup' element={<SignUp onSignUp={onSignUp}/>} />
+        <Route path='/login' element={<Login onLogin={onLogin}/>} />
+
       </Routes>   
     </>
   );
