@@ -34,7 +34,8 @@ function App() {
         <Route path='/login' element={<Login onLogin={onLogin}/>} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/user' element={user ? <Patient/> : <Login onLogin={onLogin}/> } />
-      </Routes>   
+        <Route path='/error404' element={<Error404 />} />
+      </Routes>
       
     </>
   );
