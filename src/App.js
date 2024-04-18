@@ -7,11 +7,14 @@ import NavBar from './components/NavBar';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
-import Patient from './components/Patient';import Profile from './components/Profile'
+import Patient from './components/Patient';
+import Profile from './components/Profile'
+import Error404 from './components/Error404';
 
 function App() {
   //Set Errors
   const [errors, setErrors] = useState('')
+  const [user, setUser] = useState('user')
 
   const onSignUp = (form_values, isDoctor) => {
       console.log(form_values, isDoctor)
@@ -29,10 +32,10 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<SignUp onSignUp={onSignUp}/>} />
         <Route path='/login' element={<Login onLogin={onLogin}/>} />
-
         <Route path='/profile' element={<Profile />} />
+        <Route path='/user' element={user ? <Patient/> : <Login onLogin={onLogin}/> } />
       </Routes>   
-      <Patient/>
+      
     </>
   );
 }

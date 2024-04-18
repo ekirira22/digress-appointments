@@ -66,12 +66,12 @@ export default function Profile({ id }) {
 
     return (
         <Container>
-            <Row>
-                <Col>
+            <Row className="mt-4 mb-4">
+                <div className="col-md-4 gap-4">
                     {/* user image from public */}
                     <Image src="/images.png" alt="profile pic" rounded fluid />
-                </Col>
-                <Col>
+                </div>
+                <div className="col-md-8">
                 <form className="profile" onSubmit={formik.handleSubmit}>
                 <h2 className="text-center mb-4">Profile Details</h2>
                 
@@ -157,7 +157,7 @@ export default function Profile({ id }) {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
 
-                </Col>
+                </div>
             </Row>
         </Container>
     );
