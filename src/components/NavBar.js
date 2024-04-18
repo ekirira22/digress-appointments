@@ -13,7 +13,7 @@ export default function NavBar(){
         <>
             <Navbar className="p-4 fs-6 text-light sticky-top top-0" bg="primary" data-bs-theme="dark">
                 <Container>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/">
                         <img
                             alt=""
                             src={logo}
@@ -34,15 +34,15 @@ export default function NavBar(){
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <Nav>
-                                <Nav.Link className="fw-semibold" href="#home">HOME</Nav.Link>
-                                <Nav.Link className="fw-semibold" href="#about">ABOUT</Nav.Link>
-                                <Nav.Link className="fw-semibold" href="#services">SERVICES</Nav.Link>
-                                <Nav.Link className="fw-semibold" href="#contact">CONTACT</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="/">HOME</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="/about">ABOUT</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="/services">SERVICES</Nav.Link>
+                                <Nav.Link className="fw-semibold" href="/contact">CONTACT</Nav.Link>
 
                             </Nav>
                             <Nav className="ms-4">
-                                <Button variant="transparent border border-white">SIGN UP</Button>
-                                <Button className="ms-2" variant="transparent border border-white">LOG IN</Button>
+                                <Button variant="transparent border border-white"> <NavLink to='/signup'>SIGN UP</NavLink> </Button>
+                                <Button className="ms-2" variant="transparent border border-white"><NavLink to='/login'>LOG IN</NavLink></Button>
                             </Nav>
                         </Offcanvas.Body>
                     </Offcanvas>

@@ -12,7 +12,32 @@ code {
     monospace;
 }
 
+button.custom-btn{
+  background-color: transparent;
+  padding: 10px;
+  border-color: #282c34;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #282c34;
+}
 
+button.custom-btn:hover{
+  border-color: #ffffff;
+  color: #61dafb;
+}
+nav a, nav a.active{
+  text-decoration: none;
+}
+.error{
+  margin: auto;
+  display: block;
+  text-align: left;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
 /* custom-navbar.css */
 .navbar-nav .nav-link:hover {
   color: white; /* Change to your desired hover color */
@@ -68,4 +93,5 @@ code {
 
 form.sign-up{
   margin-top: 50px;
+  transition: 0.3s;
 }
