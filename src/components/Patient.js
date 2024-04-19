@@ -22,12 +22,12 @@ function Patient(){
     return (
         <div>
             <h1>PATIENT'S DASHBOARD</h1>
-            <h4>Welcome to digress Medical Services                          
+            <h4 >Welcome to digress Medical Services                          
                 Find the best  doctors with digress healthcare.
                 What would like us to do for you.You have an option to choose your own doctor
             </h4>
-            <h1>APPOINTMENTS</h1>
-            <Table bordered hover >
+            <h1 className="text-centre">APPOINTMENTS</h1>
+            <Table bordered hover>
               <thead>
                  <tr>
                     <th>DOCTOR</th>
