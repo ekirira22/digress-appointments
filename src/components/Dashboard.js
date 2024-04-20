@@ -1,6 +1,6 @@
 import {useEffect,useState}  from "react";
 import { Table } from "react-bootstrap";
-function Patient(){
+function Dashboard(){
     const [Doctors,setDoctors]=useState([])
 
     useEffect(()=>{
@@ -56,4 +56,4 @@ function Patient(){
         </div>
     )
 }
-export default Patient
+export default Dashboard

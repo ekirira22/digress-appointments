@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './css/index.css';
+// import './css/tooplate-style.css';
+import 'animate.css/animate.min.css';
+import './css/font-awesome.min.css'
+// import './css/bootstrap.min.css'
+import './css/owl.carousel.css'
+import './css/owl.theme.default.min.css'
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';

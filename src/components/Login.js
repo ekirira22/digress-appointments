@@ -3,9 +3,11 @@ import { useFormik } from "formik"
 import { Input, Ripple, initMDB } from "mdb-ui-kit";
 import { Container } from 'react-bootstrap'
 import DataFetch from "./DataFetch";
+import { useNavigate } from "react-router-dom";
 initMDB({ Input, Ripple });
 
 export default function Login({onLogin}){
+    const navigate = useNavigate()
     const [isDoctor, setDoctor] = useState(false)
     const formik = useFormik({
         enableReinitialize : true,
@@ -13,8 +15,11 @@ export default function Login({onLogin}){
             username: "",
             password: "",
         },
-        onSubmit : async(values) => {
-            await onLogin(values, isDoctor)
+        onSubmit : (values) => {
+            onLogin(values)
+            formik.resetForm()
+            navigate('/dashboard')
+
         }
     })
     return(

@@ -16,6 +16,7 @@ export default async function DataFetch (url,method,dataObj=null) {
           return (response.message)
         }
         const data = await response.json()
+        
         return data
 
     }catch(error){

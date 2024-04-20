@@ -3,9 +3,12 @@ import { useFormik } from "formik"
 import { Input, Ripple, initMDB } from "mdb-ui-kit";
 import { Container } from 'react-bootstrap'
 import DataFetch from "./DataFetch";
+import { useNavigate } from "react-router-dom";
 initMDB({ Input, Ripple });
 
 export default function SignUp({onSignUp}){
+    const navigate = useNavigate()
+
     const [isDoctor, setDoctor] = useState(false)
     const [specializations, setSpecializations] = useState([])
     const formik = useFormik({
@@ -24,12 +27,15 @@ export default function SignUp({onSignUp}){
         onSubmit : (values) => {
             onSignUp(values)
             formik.resetForm()
+            navigate('/dashboard')
         }
     })
     useEffect(() => {
-        const response = DataFetch("http://localhost:4000/specializations", "GET")
+        const response = DataFetch("/specializations", "GET")
         response.then(specializations => setSpecializations(specializations))
     },[])
+
+    console.log(specializations)
 
     return(
         <Container>
@@ -113,7 +119,7 @@ export default function SignUp({onSignUp}){
                         <div className="col">
                             <div data-mdb-input-init className="form-outline">
                                 <select className="form-control form-select" name="specialization" value={formik.values.specialization} onChange={formik.handleChange}>
-                                    <option defaultValue={''}>Select an option</option>
+                                    <option defaultValue={''} selected>Select an option</option>
                                     {
                                         specializations.map(spec => {
                                             return(
