@@ -6,25 +6,17 @@ import Profile from "./Profile";
 import Footer from "./Footer";
 
 export default function Dashboard({user, setUser}){
-    const [Doctors,setDoctors]=useState([])
     const navigate = useNavigate()
+    const [isDoctor, setDoctor] = useState(false)
 
     useEffect(()=>{
-        fetchDoctors()
+        if (user['doctors_id']){
+            setDoctor(true)
+        }else{
+            setDoctor(false)
+        }
     },[])
 
-    async function fetchDoctors(){
-        try {
-            const data=await fetch("http://localhost:4000/doctors")
-            const allDoctors=await data.json()
-            setDoctors(allDoctors)
-            console.log(Doctors)
-            
-        } catch (error) {
-            console.log(error)
-        }
-        
-    }
     function handleLogoutClick(){
         fetch("/logout", { method: "DELETE" }).then((r) => {
             if (r.ok) {
@@ -33,6 +25,7 @@ export default function Dashboard({user, setUser}){
             }
           });
     }
+
     return (
         
         <div className="container-xxl position-relative bg-white d-flex p-0">
@@ -54,14 +47,25 @@ export default function Dashboard({user, setUser}){
                     </div>
                     <div className="navbar-nav w-100">
                         <a href="/dashboard" className="nav-item nav-link active"><i className="fa fa-tachometer me-2"></i>Dashboard</a>
-                        <div className="nav-item dropdown">
-                            <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i className="fa fa-laptop me-2"></i>Appointments</a>
-                            <div className="dropdown-menu bg-transparent border-0">
-                                <a href="/dashboard/book-appointment" className="nav-link dropdown-item">Make an appointment</a>
-                                <a href="typography.html" className="nav-link dropdown-item">View Appointments</a>
-                                <a href="element.html" className="nav-link dropdown-item">Reschedule</a>
+                        <a href="/dashboard/doctors" className="nav-item nav-link"><i className="fas fa-user-nurse me-2"></i>See {isDoctor? "Collegues" : "Doctors"}</a>
+                        {
+                            isDoctor ? 
+                            <div className="nav-item dropdown">
+                                <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i className="fa fa-user me-2"></i>Patients</a>
+                                <div className="dropdown-menu bg-transparent border-0">
+                                    <a href="/dashboard/book-appointment" className="nav-link dropdown-item">All Patients</a>
+                                    <a href="typography.html" className="nav-link dropdown-item">Booked Appointments</a>
+                                    <a href="element.html" className="nav-link dropdown-item">Reschedule</a>
+                                </div>
+                            </div> : 
+                            <div className="nav-item dropdown">
+                                <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i className="fa fa-laptop me-2"></i>Appointments</a>
+                                <div className="dropdown-menu bg-transparent border-0">
+                                    <a href="/dashboard/book-appointment" className="nav-link dropdown-item">Make an appointment</a>
+                                    <a href="/dashboard/edit-appointment" className="nav-link dropdown-item">Reschedule appointment</a>
+                                </div>
                             </div>
-                        </div>
+                        }
                         <a href="/" className="nav-item nav-link" onClick={handleLogoutClick}><i className="fa fa-sign-out me-2"></i>Logout</a>
                     </div>
                 </nav>
@@ -71,35 +75,125 @@ export default function Dashboard({user, setUser}){
             {/* Dashboard Menu Start */}
             <div className="content">
             {/* <!-- Navbar Start --> */}
-                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                    <a href="/" class="navbar-brand d-flex d-lg-none me-4">
-                        <h2 class="text-primary mb-0"><i class="fa fa-user-doctor"></i></h2>
+                <nav className="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                    <a href="/" className="navbar-brand d-flex d-lg-none me-4">
+                        <h2 className="text-primary mb-0"><i className="fa fa-user-doctor"></i></h2>
                     </a>
-                    <a href="#" class="sidebar-toggler flex-shrink-0">
-                        <i class="fa fa-bars"></i>
+                    <a href="#" className="sidebar-toggler flex-shrink-0">
+                        <i className="fa fa-bars"></i>
                     </a>
-                    <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="Search" />
+                    <form className="d-none d-md-flex ms-4">
+                        <input className="form-control border-0" type="search" placeholder="Search" />
                     </form>
-                    <div class="navbar-nav align-items-center ms-auto">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img class="rounded-circle me-lg-2" src={userimg} alt="" style={{width: "40px", height: "40px"}} />
-                                <span class="d-none d-lg-inline-flex">{user['name']}</span>
+                    <div className="navbar-nav align-items-center ms-auto">
+                        <div className="nav-item dropdown">
+                            <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <img className="rounded-circle me-lg-2" src={userimg} alt="" style={{width: "40px", height: "40px"}} />
+                                <span className="d-none d-lg-inline-flex">{user['name']}</span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="/dashboard/profile" class="dropdown-item">My Profile</a>
-                                <a href="/dashboard/book-appointment" class="dropdown-item">Settings</a>
-                                <a href="/" class="dropdown-item" onClick={handleLogoutClick}>Log Out</a>
+                            <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href="/dashboard/profile" className="dropdown-item">My Profile</a>
+                                <a href="/dashboard/vitals" className="dropdown-item">Health Settings</a>
+                                <a href="/" className="dropdown-item" onClick={handleLogoutClick}>Log Out</a>
                             </div>
                         </div>
                     </div>
                 </nav>
-                <div class="container-fluid pt-4 px-4">
+                <div className="container-fluid pt-4 px-4">
                     <div className="row g-4">
+                    <div className="col-sm-6 col-xl-3">
+                        <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i className="fa fa-heartbeat fa-3x text-primary"></i>
+                            <div className="ms-3">
+                                <p className="mb-2">Pulse</p>
+                                <h6 className="mb-0">85bpm</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-6 col-xl-3">
+                        <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i className="fas fa-syringe fa-3x text-primary"></i>
+                            <div className="ms-3">
+                                <p className="mb-2">Blood pressure</p>
+                                <h6 className="mb-0">80/70 mm/Hg</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-6 col-xl-3">
+                        <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i className="fa fa-thermometer fa-3x text-primary"></i>
+                            <div className="ms-3">
+                                <p className="mb-2">Body Temperature</p>
+                                <h6 className="mb-0">36.3 C</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm-6 col-xl-3">
+                        <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i className="fas fa-running fa-3x text-primary"></i>
+                            <div className="ms-3">
+                                <p className="mb-2">Breathing Rate</p>
+                                <h6 className="mb-0">15 breaths/m</h6>
+                            </div>
+                        </div>
+                    </div>
                         <Outlet />
+                    </div>
+                    <div className="row g-4 mt-4">
+                        <div className="col-md-12 text-left">
+                            <div className="col-12">
+                                <div className="bg-light rounded h-100 p-4">
+                                    <h6 className="mb-4"><span className="db-header">Appointments</span></h6>
+                                    <div className="table-responsive">
+                                        <table className="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">First Name</th>
+                                                    <th scope="col">Last Name</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Country</th>
+                                                    <th scope="col">ZIP</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>John</td>
+                                                    <td>Doe</td>
+                                                    <td>jhon@email.com</td>
+                                                    <td>USA</td>
+                                                    <td>123</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                    <td>mark@email.com</td>
+                                                    <td>UK</td>
+                                                    <td>456</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Jacob</td>
+                                                    <td>Thornton</td>
+                                                    <td>jacob@email.com</td>
+                                                    <td>AU</td>
+                                                    <td>789</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div> 
                 </div>
+
                 <Footer />
             </div>
             

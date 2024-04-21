@@ -7,11 +7,10 @@ import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 initMDB({ Input, Ripple });
 
-export default function SignUp({onSignUp}){
+export default function SignUp({onSignUp, specializations}){
     const navigate = useNavigate()
 
     const [isDoctor, setDoctor] = useState(false)
-    const [specializations, setSpecializations] = useState([])
     const formik = useFormik({
         enableReinitialize : true,
         initialValues : {
@@ -31,13 +30,7 @@ export default function SignUp({onSignUp}){
             navigate('/dashboard')
         }
     })
-    useEffect(() => {
-        const response = DataFetch("/specializations", "GET")
-        response.then(specializations => setSpecializations(specializations))
-    },[])
-
-    console.log(specializations)
-
+    
     return(
         <>
             <Container>
@@ -121,11 +114,11 @@ export default function SignUp({onSignUp}){
                         <div className="col">
                             <div data-mdb-input-init className="form-outline">
                                 <select className="form-control form-select" name="specialization" value={formik.values.specialization} onChange={formik.handleChange}>
-                                    <option defaultValue={''} selected>Select an option</option>
+                                    <option defaultValue={''}>Select an option</option>
                                     {
                                         specializations.map(spec => {
                                             return(
-                                                <option key={spec.id}>{spec.specialization}</option>
+                                                <option key={spec.id}>{spec.name}</option>
                                             )
                                         })
                                     }
