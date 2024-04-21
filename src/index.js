@@ -5,8 +5,7 @@ import './css/index.css';
 import 'animate.css/animate.min.css';
 import './css/font-awesome.min.css'
 // import './css/bootstrap.min.css'
-import './css/owl.carousel.css'
-import './css/owl.theme.default.min.css'
+import './main.js'
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';

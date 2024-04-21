@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Route, Routes} from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
@@ -9,6 +10,7 @@ import Dashboard from './components/Dashboard';
 import Profile from './components/Profile'
 import Error404 from './components/Error404';
 import Footer from "./components/Footer";
+import BookAppointment from "./components/BookAppointment";
 
 function App() {
   //Set Errors
@@ -63,19 +65,21 @@ function App() {
   console.log(user)
 
   return (
-    <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+    <>
       {errors.length > 1 ? <p className="error">{errors}</p> : null}
-      <NavBar user={user} setUser={setUser}/>
+      {!user ? <NavBar user={user}/> : null}
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/signup' element={user ? <Dashboard /> : <SignUp onSignUp={onSignUp}/>} />
-        <Route path='/login' element={user ? <Dashboard /> : <Login onLogin={onLogin}/>} />
+        <Route path='/signup' element={user ? <Dashboard user={user} setUser={setUser}/> : <SignUp onSignUp={onSignUp}/>} />
+        <Route path='/login' element={user ? <Dashboard user={user} setUser={setUser}/> : <Login onLogin={onLogin}/>} />
         <Route path='/profile' element={user ? <Profile /> : <Login onLogin={onLogin}/>} />
-        <Route path='/dashboard' element={user ? <Dashboard/> : <Login onLogin={onLogin}/> } />
+        <Route path='/dashboard' element={user ? <Dashboard user={user} setUser={setUser}/> : <Login onLogin={onLogin}/> }>
+          <Route path="profile" element={<Profile />} />
+          <Route path="book-appointment" element={<BookAppointment />} />
+        </Route>
         <Route path='/error404' element={<Error404 />} />
       </Routes>
-      <Footer />      
-    </body>
+    </>
   );
 }
 

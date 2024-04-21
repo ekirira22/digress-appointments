@@ -4,6 +4,7 @@ import { Input, Ripple, initMDB } from "mdb-ui-kit";
 import { Container } from 'react-bootstrap'
 import DataFetch from "./DataFetch";
 import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 initMDB({ Input, Ripple });
 
 export default function Login({onLogin}){
@@ -23,7 +24,8 @@ export default function Login({onLogin}){
         }
     })
     return(
-        <Container>
+        <>
+            <Container>
             <form className="sign-up" onSubmit={formik.handleSubmit}>
                 <h2 className="text-center mb-4">Log in</h2>
                 {/* <!-- 2 column grid layout with text inputs htmlFor the first and last names --> */}
@@ -45,24 +47,19 @@ export default function Login({onLogin}){
                         </div>
                     </div>
                 </div>
-                
-                {/* <!-- Checkbox --> */}
-                <div className="form-check d-flex justify-content-center mb-4">
-                    <input className="form-check-input me-2" type="checkbox" name="isDoctor" onClick={() => setDoctor(!isDoctor)}/>
-                    <label className="form-check-label" htmlFor="isDoctor">
-                        Login as Doctor
-                    </label>
-                </div>
 
                 {/* <!-- Submit button --> */}
-                <div className="row mb-4 text-center">
-                    <button data-mdb-ripple-init type="submit" className="custom-btn mb-4 text-center">LOG IN</button>                    
+                <div className="mb-4 text-center">
+                    <button data-mdb-ripple-init type="submit" className="btn btn-info mb-4 text-center">LOG IN</button>                    
                 </div>
                 <div className="row mb-4 text-center">
                     <a className="form-a" href="/forgot">Forgot Password?</a>
                 </div>
 
             </form>
-        </Container>
+            </Container>
+            <Footer />
+        </>
+        
     )
 }
