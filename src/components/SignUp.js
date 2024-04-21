@@ -3,9 +3,13 @@ import { useFormik } from "formik"
 import { Input, Ripple, initMDB } from "mdb-ui-kit";
 import { Container } from 'react-bootstrap'
 import DataFetch from "./DataFetch";
+import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 initMDB({ Input, Ripple });
 
 export default function SignUp({onSignUp}){
+    const navigate = useNavigate()
+
     const [isDoctor, setDoctor] = useState(false)
     const [specializations, setSpecializations] = useState([])
     const formik = useFormik({
@@ -15,24 +19,28 @@ export default function SignUp({onSignUp}){
             username: "",
             email: "",
             password: "",
+            confirm_password: "",
             address: "",
             gender: "",
             doctors_id: "",
             specialization: ""
         },
-        onSubmit : async(values) => {
-            await onSignUp(values, isDoctor)
+        onSubmit : (values) => {
+            onSignUp(values)
+            formik.resetForm()
+            navigate('/dashboard')
         }
     })
     useEffect(() => {
-        const response = DataFetch("http://localhost:4000/specializations", "GET")
+        const response = DataFetch("/specializations", "GET")
         response.then(specializations => setSpecializations(specializations))
     },[])
 
-    console.log(isDoctor)
+    console.log(specializations)
 
     return(
-        <Container>
+        <>
+            <Container>
             <form className="sign-up" onSubmit={formik.handleSubmit}>
                 <h2 className="text-center mb-4">Sign up</h2>
                 {/* <!-- 2 column grid layout with text inputs htmlFor the first and last names --> */}
@@ -67,8 +75,8 @@ export default function SignUp({onSignUp}){
                     </div>
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input required type="password" name="confirm_password" className="form-control" />
-                            <label className="form-label" htmlFor="confirm_password">Confirm Password</label>
+                            <input required type="password" name="confirm_password" value={formik.values.confirm_password} onChange={formik.handleChange} className="form-control" />
+                            <label className="form-label" htmlFor="confirm_password">Confirm Password </label>
                         </div>
                     </div>
                 </div>
@@ -113,7 +121,7 @@ export default function SignUp({onSignUp}){
                         <div className="col">
                             <div data-mdb-input-init className="form-outline">
                                 <select className="form-control form-select" name="specialization" value={formik.values.specialization} onChange={formik.handleChange}>
-                                    <option defaultValue={'General Surgery'}>Select an option</option>
+                                    <option defaultValue={''} selected>Select an option</option>
                                     {
                                         specializations.map(spec => {
                                             return(
@@ -129,12 +137,15 @@ export default function SignUp({onSignUp}){
                 }
 
                 {/* <!-- Submit button --> */}
-                <div className="row mb-4 text-center">
-                    <button data-mdb-ripple-init type="submit" className="custom-btn mb-4 text-center">SIGN UP</button>                    
+                <div className="mb-4 text-center">
+                    <button type="submit" className="btn btn-info mb-4 text-center">SIGN UP</button>                    
                 </div>
 
             </form>
-        </Container>
+            </Container>
+            <Footer />
+        </>
+        
         
     )
 }
