@@ -34,6 +34,6 @@ HTML,Bootstrap CSS, React JS, Python, Flask, REST APIs
 
   
 
-## API Data
+## API Endpoint
 Click link below to see API Data
-[API LINK]()
+[API LINK](https://digress-appointments-api.onrender.com/)
