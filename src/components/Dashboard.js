@@ -26,6 +26,8 @@ export default function Dashboard({user, setUser}){
           });
     }
 
+    console.log(user.appointments)
+
     return (
         
         <div className="container-xxl position-relative bg-white d-flex p-0">
@@ -93,7 +95,7 @@ export default function Dashboard({user, setUser}){
                             </a>
                             <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 <a href="/dashboard/profile" className="dropdown-item">My Profile</a>
-                                <a href="/dashboard/vitals" className="dropdown-item">Health Settings</a>
+                                <a href="/dashboard/health-stats" className="dropdown-item">Health Stats</a>
                                 <a href="/" className="dropdown-item" onClick={handleLogoutClick}>Log Out</a>
                             </div>
                         </div>
@@ -106,16 +108,16 @@ export default function Dashboard({user, setUser}){
                             <i className="fa fa-heartbeat fa-3x text-primary"></i>
                             <div className="ms-3">
                                 <p className="mb-2">Pulse</p>
-                                <h6 className="mb-0">85bpm</h6>
+                                <h6 className="mb-0">{user['pulse_rate']} bpm</h6>
                             </div>
                         </div>
                     </div>
                     <div className="col-sm-6 col-xl-3">
                         <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i className="fas fa-syringe fa-3x text-primary"></i>
+                            <i className="fas fa-stethoscope fa-3x text-primary"></i>
                             <div className="ms-3">
                                 <p className="mb-2">Blood pressure</p>
-                                <h6 className="mb-0">80/70 mm/Hg</h6>
+                                <h6 className="mb-0">{user['blood_pressure']} mm/Hg</h6>
                             </div>
                         </div>
                     </div>
@@ -124,16 +126,16 @@ export default function Dashboard({user, setUser}){
                             <i className="fa fa-thermometer fa-3x text-primary"></i>
                             <div className="ms-3">
                                 <p className="mb-2">Body Temperature</p>
-                                <h6 className="mb-0">36.3 C</h6>
+                                <h6 className="mb-0">{user['temparature']}°C</h6>
                             </div>
                         </div>
                     </div>
                     <div className="col-sm-6 col-xl-3">
                         <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i className="fas fa-running fa-3x text-primary"></i>
+                            <i className="fas fa-syringe fa-3x text-primary"></i>
                             <div className="ms-3">
-                                <p className="mb-2">Breathing Rate</p>
-                                <h6 className="mb-0">15 breaths/m</h6>
+                                <p className="mb-2">Blood Group</p>
+                                <h6 className="mb-0">{user['blood_group']}</h6>
                             </div>
                         </div>
                     </div>
@@ -148,43 +150,29 @@ export default function Dashboard({user, setUser}){
                                         <table className="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">First Name</th>
-                                                    <th scope="col">Last Name</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Country</th>
-                                                    <th scope="col">ZIP</th>
-                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Doctors' Name</th>
+                                                    <th scope="col">Treatment Area</th>
+                                                    <th scope="col">Address</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Time</th>
+                                                    <th scope="col">Approved</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>John</td>
-                                                    <td>Doe</td>
-                                                    <td>jhon@email.com</td>
-                                                    <td>USA</td>
-                                                    <td>123</td>
-                                                    <td>Member</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td>mark@email.com</td>
-                                                    <td>UK</td>
-                                                    <td>456</td>
-                                                    <td>Member</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>jacob@email.com</td>
-                                                    <td>AU</td>
-                                                    <td>789</td>
-                                                    <td>Member</td>
-                                                </tr>
+                                                {
+                                                    user['appointments'].map(app => {
+                                                        return (
+                                                            <tr key={app.id}>
+                                                                <td>{app.doctors_id}</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td>{app.date}</td>
+                                                                <td>{app.time}</td>
+                                                                <td><i className="fa fa-arrow-right text-success text-right"></i></td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

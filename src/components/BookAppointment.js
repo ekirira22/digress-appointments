@@ -65,7 +65,7 @@ export default function BookAppointment({specializations, allDoctors}){
                             <select required className="form-control form-select" name="doctor_username" value={formik.values.doctor_username} onChange={formik.handleChange}>
                                 <option>Select an option</option>
                                 {
-                                    filteredDoctors.map(doc => {
+                                    filteredDoctors.map((doc) => {
                                         return(
                                             <option key={doc.id}>{doc.name} - {spec}</option>
                                         )

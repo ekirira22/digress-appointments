@@ -14,6 +14,7 @@ import BookAppointment from "./components/BookAppointment";
 import DataFetch from "./components/DataFetch";
 import EditAppointment from "./components/EditAppointment"
 import Doctors from "./components/Doctors"
+import HealthStats from "./components/HealthStats"
 
 function App() {
   //Set Errors
@@ -37,7 +38,6 @@ function App() {
 
     // Get All Sessions
     const specialization_response = DataFetch("/specializations", "GET")
-    console.log(specialization_response.ok)
     specialization_response.then(specializations => setSpecializations(specializations))
 
     //Get All Doctors
@@ -50,8 +50,6 @@ function App() {
 
 
   }, []);
-
-  console.log(allPatients)
 
   const onSignUp = (form_values) => {
       fetch(
@@ -67,7 +65,7 @@ function App() {
         if (r.ok) {
           r.json().then((user) => setUser(user));
           setErrors('')
-          setSuccess("Sucess!! OK.")
+          setSuccess(`Welcome ${user.name}. Thank you for signing up!!`)
         }else{
           r.json().then((response) => setErrors(response.errors[0]))
         }
@@ -87,11 +85,28 @@ function App() {
       if (r.ok) {
         r.json().then((user) => setUser(user));
         setErrors('')
-        setSuccess("Sucess!! OK.")
+        setSuccess("Sucessfully logged in!")
       }else{
         r.json().then((response) => setErrors(response.errors[0]))
       }
     })
+  }
+
+  const onEditUser = (form_values) => {
+    const form_obj = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form_values)
+    }
+    const user = user['username']
+    // Check if user is doctor or patient
+    if(user['doctors_id']){
+        fetch(`/doctors/${user}`, form_obj)
+    }else{
+      fetch(`/patients/${user}`, form_obj)
+    }
   }
 
   return (
@@ -107,9 +122,10 @@ function App() {
         <Route path='/profile' element={user ? <Profile /> : <Login onLogin={onLogin}/>} />
         <Route path='/dashboard' element={user ? <Dashboard user={user} setUser={setUser}/> : <Login onLogin={onLogin}/> }>
           <Route path="profile" element={<Profile />} />
-          <Route path="book-appointment" element={<BookAppointment specializations={specializations} allDoctors={allDoctors} />} />
+          <Route path="book-appointment" element={<BookAppointment user={user} specializations={specializations} allDoctors={allDoctors} setSuccess={setSuccess} setErrors={setErrors}/>} />
           <Route path="edit-appointment" element={<EditAppointment />} />
           <Route path="doctors" element={<Doctors allDoctors={allDoctors}/>} />
+          <Route path="health-stats" element={<HealthStats user={user} onEditUser={onEditUser}/>} />
         </Route>
         <Route path='/error404' element={<Error404 />} />
       </Routes>
