@@ -1,8 +1,6 @@
 import {useEffect,useState}  from "react";
-import { Table } from "react-bootstrap";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import {Outlet, useNavigate } from "react-router-dom";
 import userimg from '../images/testimonial-2.jpg'
-import Profile from "./Profile";
 import Footer from "./Footer";
 
 export default function Dashboard({user, setUser}){
@@ -160,15 +158,15 @@ export default function Dashboard({user, setUser}){
                                             </thead>
                                             <tbody>
                                                 {
-                                                    user['appointments'].map(app => {
+                                                    user.appointments.map(app => {
                                                         return (
                                                             <tr key={app.id}>
-                                                                <td>{app.doctors_id}</td>
+                                                                <td>{app.doctor_id}</td>
                                                                 <td></td>
                                                                 <td></td>
                                                                 <td>{app.date}</td>
                                                                 <td>{app.time}</td>
-                                                                <td><i className="fa fa-arrow-right text-success text-right"></i></td>
+                                                                <td><i className="fa fa-check text-success text-right"></i></td>
                                                             </tr>
                                                         )
                                                     })

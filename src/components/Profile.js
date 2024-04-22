@@ -1,164 +1,91 @@
-import React, { useState, useEffect } from "react";
-import { useFormik } from "formik";
-import { Container, Row, Col, Image } from 'react-bootstrap'; 
-import DataFetch from "./DataFetch";
+import { useState, useEffect } from "react";
+import { useFormik } from "formik"
+import { Container } from 'react-bootstrap'
+import { useNavigate } from "react-router-dom";
 
-export default function Profile({ id }) {
-    const [doctor, setDoctor] = useState(false);
-    const [patient, setPatient] = useState(false);
-    const [specializations, setSpecializations] = useState([]);
+export default function Profile({user, onEditUser}){
+    const navigate = useNavigate()
+
+    const [isDoctor, setDoctor] = useState(false)
     const formik = useFormik({
-        enableReinitialize: true,
-        initialValues: {
-            name: "",
-            username: "",
-            email: "",
-            password: "",
-            address: "",
-            gender: "",
-            doctors_id: "",
-            specialization: ""
+        enableReinitialize : true,
+        initialValues : {
+            name : user.name,
+            username: user.username,
+            email: user.email,
+            address: user.address,
+            gender: user.gender
         },
-        onSubmit: (values) => {
-            // Handle form submission based on whether the user is a doctor or patient
-            if (doctor) {
-                // Handle submission for doctor profile update
-                //updateDoctorProfile(values);
-            } else if (patient) {
-                // Handle submission for patient profile update
-                // updatePatientProfile(values);
-            }
+        onSubmit : (values) => {
+            onEditUser(values)
+            formik.resetForm()
+            navigate('/dashboard')
         }
-    });
+    })
 
     useEffect(() => {
-        // Fetch user data based on the ID 
-        const fetchData = async () => {
-            try {
-                const userResponse = await DataFetch(`http://localhost:4000/users/${id}`, "GET");
-                const user = await userResponse.json();
-                if (user.type == "doctor") {
-                    setDoctor(true);
-                    const specializationResponse = await DataFetch(`http://localhost:4000/specializations/${id}`, "GET");
-                    const specializations = await specializationResponse.json();
-                    setSpecializations(specializations);
-                } else if (user.type == "patient") {
-                    setPatient(true);
-                }
-                // Populate form values with user data
-                formik.setValues({
-                    name: user.name,
-                    username: user.username,
-                    email: user.email,
-                    password: user.password,
-                    address: user.address,
-                    gender: user.gender,
-                    doctors_id: user.doctors_id || "", // Assuming doctors_id may not exist for patients
-                    specialization: user.specialization || "" // Assuming specialization may not exist for patients
-                });
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        };
+        user['doctors_id'] ? setDoctor(true) : setDoctor(false)
+    }, [])
 
-        fetchData();
-    }, [id, formik]);
-
-    return (
-        <Container>
-            <Row className="mt-4 mb-4">
-                <div className="col-md-4 gap-4">
-                    {/* user image from public */}
-                    <Image src="/images.png" alt="profile pic" rounded fluid />
-                </div>
-                <div className="col-md-8">
-                <form className="profile" onSubmit={formik.handleSubmit}>
-                <h2 className="text-center mb-4">Profile Details</h2>
-                
-                {/* Full Name */}
-                <div className="mb-4">
-                    <label className="form-label" htmlFor="name">Full name</label>
-                    <div data-mdb-input-init className="form-outline">
-                        <input type="text" name="name" value={formik.values.name} onChange={formik.handleChange} className="form-control" />
-                    </div>
-                </div>
-
-                {/* Username */}
-                <div className="mb-4">
-                    <label className="form-label" htmlFor="username">Alias / Username</label>
-                    <div data-mdb-input-init className="form-outline">
-                        <input type="text" name="username" value={formik.values.username} onChange={formik.handleChange} className="form-control" />
-                    </div>
-                </div>
-
-                {/* Email */}
-                <div className="mb-4">
-                    <label className="form-label" htmlFor="email">Email address</label>
-                    <div data-mdb-input-init className="form-outline">
-                        <input type="email" name="email" value={formik.values.email} onChange={formik.handleChange} className="form-control" />
-                    </div>
-                </div>
-
-                {/* Password */}
-                <div className="mb-4">
-                    <label className="form-label" htmlFor="password">Password</label>
-                    <div data-mdb-input-init className="form-outline">
-                        <input type="password" name="password" value={formik.values.password} onChange={formik.handleChange} className="form-control" />
-                    </div>
-                </div>
-
-                {/* Confirm Password */}
-                <div className="mb-4">
-                    <label className="form-label" htmlFor="confirm_password">Confirm Password</label>
-                    <div data-mdb-input-init className="form-outline">
-                        <input type="password" name="confirm_password" className="form-control" />
-                    </div>
-                </div>
-
-                {/* Address */}
-                <div className="mb-4">
-                    <label className="form-label" htmlFor="address">Address</label>
-                    <div data-mdb-input-init className="form-outline">
-                        <input type="text" name="address" value={formik.values.address} onChange={formik.handleChange} className="form-control" />
-                    </div>
-                </div>
-
-                {/* Gender */}
-                <div className="mb-4">
-                    <label className="form-label" htmlFor="gender">Gender</label>
-                    <div data-mdb-input-init className="form-outline">
-                        <input type="text" name="gender" value={formik.values.gender} onChange={formik.handleChange} className="form-control" />
-                    </div>
-                </div>
-
-                {/* Doctor's ID */}
-                {doctor && (
-                    <div className="mb-4">
-                        <label className="form-label" htmlFor="doctors_id">Doctor's ID</label>
+    console.log(isDoctor)
+    
+    return(
+        <>
+            <Container>
+            <form className="sign-up" onSubmit={formik.handleSubmit}>
+                <i className="fas fa-user-md fa-3x text-primary"></i>
+                <h2 className="text-center mb-4">Edit Profile Information</h2>
+                {/* <!-- 2 column grid layout with text inputs htmlFor the first and last names --> */}
+                <div className="row mb-4">
+                    <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input type="text" name="doctors_id" value={formik.values.doctors_id} onChange={formik.handleChange} className="form-control" />
+                            <input required type="text" name="name" value={formik.values.name} onChange={formik.handleChange} className="form-control" />
+                            <label className="form-label" htmlFor="name">Full name</label>
                         </div>
                     </div>
-                )}
-
-                {/* Specialization */}
-                {doctor && (
-                    <div className="mb-4">
-                        <label className="form-label" htmlFor="specialization">Specialization</label>
-                        <select name="specialization" value={formik.values.specialization} onChange={formik.handleChange} className="form-select">
-                            <option value="">Select Specialization</option>
-                            {specializations.map(spec => (
-                                <option key={spec.id} value={spec.name}>{spec.name}</option>
-                            ))}
-                        </select>
+                    <div className="col">
+                        <div data-mdb-input-init className="form-outline">
+                            <input required type="text" name="username" value={formik.values.username} onChange={formik.handleChange} className="form-control" />
+                            <label className="form-label" htmlFor="username">Alias /Username</label>
+                        </div>
                     </div>
-                )}
-
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
-
                 </div>
-            </Row>
-        </Container>
-    );
+
+                {/* <!-- Email input --> */}
+                <div data-mdb-input-init className="form-outline mb-4">
+                    <input required type="email" name="email" value={formik.values.email} onChange={formik.handleChange} className="form-control" />
+                    <label className="form-label" htmlFor="email">Email address</label>
+                </div>
+
+                {/* Address and Gender input  */}
+                <div className="row mb-4">
+                    <div className="col">
+                        <div data-mdb-input-init className="form-outline">
+                            <input type="text" name="address" value={formik.values.address} onChange={formik.handleChange} className="form-control" />
+                            <label className="form-label" htmlFor="address">Address</label>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div data-mdb-input-init className="form-outline">
+                            <select required className="form-control form-select" name="gender" value={formik.values.gender} onChange={formik.handleChange}>
+                                <option defaultValue={'M'}>Select an option</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+                            <label className="form-label" htmlFor="gender">Gender</label>
+                        </div>
+                    </div>
+                </div>
+                
+                {/* <!-- Submit button --> */}
+                <div className="mb-4 text-center">
+                    <button type="submit" className="btn btn-info mb-4 text-center">UPDATE</button>                    
+                </div>
+
+            </form>
+            </Container>
+        </>
+        
+        
+    )
 }

@@ -3,10 +3,9 @@ import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
-export default function HealthStats({user, onEditUser}){
+export default function HealthStats({user, setUser, onEditUser}){
 
     const navigate = useNavigate()   
-
 
     const formik = useFormik({
         enableReinitialize : true,
@@ -17,13 +16,14 @@ export default function HealthStats({user, onEditUser}){
             blood_group: user['blood_group']
         },
         onSubmit : (values) => {
+            
             onEditUser(values)
             formik.resetForm()
             navigate('/dashboard')
 
         }
     })
-
+console.log(formik.values)
     return(
         <>
             <Container>
@@ -70,8 +70,8 @@ export default function HealthStats({user, onEditUser}){
                     </div>
                     {/* <!-- Submit button --> */}
                     <div className="mb-4 text-center d-flex justify-content-between">
-                        <button data-mdb-ripple-init type="submit" className="btn btn-info mb-4 text-center">UPDATE</button> 
                         <button data-mdb-ripple-init type="reset" className="btn btn-warning mb-4 text-center" onClick={() => formik.resetForm()}>RESET</button>                   
+                        <button data-mdb-ripple-init type="submit" className="btn btn-info mb-4 text-center">UPDATE</button> 
                     </div>
                 </form>
             </Container>

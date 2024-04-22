@@ -31,7 +31,7 @@ export default function Home(){
                     </div>
                 </div>
             </section>
-               <section id="appointment" data-stellar-background-ratio="3">
+               {/* <section id="appointment" data-stellar-background-ratio="3">
                     <div className="container">
                          <div className="row">
 
@@ -85,7 +85,7 @@ export default function Home(){
 
                          </div>
                     </div>
-               </section>
+               </section> */}
             <Footer />
         </>
     )

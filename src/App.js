@@ -100,14 +100,27 @@ function App() {
         },
         body: JSON.stringify(form_values)
     }
-    const user = user['username']
+    const user_now = user['username']
+    let user_type
     // Check if user is doctor or patient
-    if(user['doctors_id']){
-        fetch(`/doctors/${user}`, form_obj)
-    }else{
-      fetch(`/patients/${user}`, form_obj)
-    }
+
+    user['doctors_id'] ? user_type = "doctors" : user_type = "patients"
+      
+    fetch( `/${user_type}/${user_now}`, form_obj).then(r => {
+      if(r.ok){
+        //set state
+        const updated_user = {...user, ...form_values}
+        setUser(updated_user)
+
+        setSuccess("Updated successfully!!")
+      }else{
+        r.json().then((response) => setErrors(response.errors[0]))
+      }
+    })
+    //After updating, update user state using setUser
   }
+
+  
 
   return (
     <>
@@ -121,11 +134,11 @@ function App() {
         <Route path='/login' element={user ? <Dashboard user={user} setUser={setUser}/> : <Login onLogin={onLogin}/>} />
         <Route path='/profile' element={user ? <Profile /> : <Login onLogin={onLogin}/>} />
         <Route path='/dashboard' element={user ? <Dashboard user={user} setUser={setUser}/> : <Login onLogin={onLogin}/> }>
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<Profile user={user} onEditUser={onEditUser} />} />
           <Route path="book-appointment" element={<BookAppointment user={user} specializations={specializations} allDoctors={allDoctors} setSuccess={setSuccess} setErrors={setErrors}/>} />
           <Route path="edit-appointment" element={<EditAppointment />} />
           <Route path="doctors" element={<Doctors allDoctors={allDoctors}/>} />
-          <Route path="health-stats" element={<HealthStats user={user} onEditUser={onEditUser}/>} />
+          <Route path="health-stats" element={<HealthStats user={user} setUser={setUser} onEditUser={onEditUser}/>} />
         </Route>
         <Route path='/error404' element={<Error404 />} />
       </Routes>
