@@ -2,10 +2,13 @@ import {useEffect,useState}  from "react";
 import {Outlet, useNavigate } from "react-router-dom";
 import userimg from '../images/testimonial-2.jpg'
 import Footer from "./Footer";
+import DataFetch from "./DataFetch";
 
-export default function Dashboard({user, setUser}){
+export default function Dashboard({user, handleLogoutClick, allDoctors}){
     const navigate = useNavigate()
     const [isDoctor, setDoctor] = useState(false)
+    let app_doctor
+    let specialization
 
     useEffect(()=>{
         if (user['doctors_id']){
@@ -15,16 +18,21 @@ export default function Dashboard({user, setUser}){
         }
     },[])
 
-    function handleLogoutClick(){
-        fetch("/logout", { method: "DELETE" }).then((r) => {
-            if (r.ok) {
-              setUser(null);
-              navigate('/')
+    const getDoctorsInfo = (id, field) => {
+        try{
+            const doctor = allDoctors.filter((doc) => {
+                return doc.id === id
+            })
+            if(field === "name"){
+                return doctor[0].name
+            }else if (field === "specialization"){
+                return doctor[0].specialization
             }
-          });
+        }catch(error){
+            console.log(error)
+        }
     }
 
-    console.log(user.appointments)
 
     return (
         
@@ -66,7 +74,7 @@ export default function Dashboard({user, setUser}){
                                 </div>
                             </div>
                         }
-                        <a href="/" className="nav-item nav-link" onClick={handleLogoutClick}><i className="fa fa-sign-out me-2"></i>Logout</a>
+                        <a href="/" className="nav-item nav-link" onClick={() => handleLogoutClick()}><i className="fa fa-sign-out me-2"></i>Logout</a>
                     </div>
                 </nav>
             </div>
@@ -94,7 +102,7 @@ export default function Dashboard({user, setUser}){
                             <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 <a href="/dashboard/profile" className="dropdown-item">My Profile</a>
                                 <a href="/dashboard/health-stats" className="dropdown-item">Health Stats</a>
-                                <a href="/" className="dropdown-item" onClick={handleLogoutClick}>Log Out</a>
+                                <a href="/" className="dropdown-item" onClick={() => handleLogoutClick()}>Log Out</a>
                             </div>
                         </div>
                     </div>
@@ -148,9 +156,10 @@ export default function Dashboard({user, setUser}){
                                         <table className="table">
                                             <thead>
                                                 <tr>
+                                                    <th scope="row">App.Nō</th>
                                                     <th scope="col">Doctors' Name</th>
                                                     <th scope="col">Treatment Area</th>
-                                                    <th scope="col">Address</th>
+                                                    <th scope="col">Patient's Note</th>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">Time</th>
                                                     <th scope="col">Approved</th>
@@ -161,9 +170,10 @@ export default function Dashboard({user, setUser}){
                                                     user.appointments.map(app => {
                                                         return (
                                                             <tr key={app.id}>
-                                                                <td>{app.doctor_id}</td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <th scope="row">00{app.id}</th>
+                                                                <td>{getDoctorsInfo(app.doctor_id, "name")}</td>
+                                                                <td>{getDoctorsInfo(app.doctor_id, "specialization")}</td>
+                                                                <td>{app.patient_note}</td>
                                                                 <td>{app.date}</td>
                                                                 <td>{app.time}</td>
                                                                 <td><i className="fa fa-check text-success text-right"></i></td>

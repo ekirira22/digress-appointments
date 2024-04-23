@@ -3,24 +3,23 @@ import { useFormik } from "formik"
 import { Container } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 
-export default function BookAppointment({specializations, allDoctors}){
+export default function BookAppointment({specializations, allDoctors, onBookAppointment}){
 
     const navigate = useNavigate()   
     const [spec, setSpec] = useState('')
-    const [specDoctors, setSpecDoctors] = useState(allDoctors)
     const [filteredDoctors, setFilteredDoctors] = useState([])
 
     const formik = useFormik({
         enableReinitialize : true,
         initialValues : {
             specialization: spec,
-            doctor_username: "",
+            doctor_id: "",
             time: "",
             date: "",
             patient_note: ""
         },
         onSubmit : (values) => {
-            // onLogin(values)
+            onBookAppointment(values)
             formik.resetForm()
             navigate('/dashboard')
 
@@ -28,12 +27,12 @@ export default function BookAppointment({specializations, allDoctors}){
     })
 
     useEffect(() => {
-        const filteredDoctors = specDoctors.filter((doctor) => {
+        const filteredDoctors = allDoctors.filter((doctor) => {
             return doctor.specialization === spec
         })
         setFilteredDoctors(filteredDoctors)
     }, [spec])
-    
+
     return(
         <>
             <Container>
@@ -62,12 +61,12 @@ export default function BookAppointment({specializations, allDoctors}){
                 <div className="row mb-4">
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <select required className="form-control form-select" name="doctor_username" value={formik.values.doctor_username} onChange={formik.handleChange}>
+                            <select required className="form-control form-select" name="doctor_id" value={formik.values.doctor_id} onChange={formik.handleChange}>
                                 <option>Select an option</option>
                                 {
                                     filteredDoctors.map((doc) => {
                                         return(
-                                            <option key={doc.id}>{doc.name} - {spec}</option>
+                                            <option key={doc.id} value={doc.id}>{doc.name} - {spec}</option>
                                         )
                                     })
                                 }

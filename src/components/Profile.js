@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 export default function Profile({user, onEditUser}){
     const navigate = useNavigate()
 
-    const [isDoctor, setDoctor] = useState(false)
     const formik = useFormik({
         enableReinitialize : true,
         initialValues : {
@@ -22,12 +21,6 @@ export default function Profile({user, onEditUser}){
             navigate('/dashboard')
         }
     })
-
-    useEffect(() => {
-        user['doctors_id'] ? setDoctor(true) : setDoctor(false)
-    }, [])
-
-    console.log(isDoctor)
     
     return(
         <>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes} from 'react-router-dom';
+import { Route, Routes, useNavigate} from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar';
@@ -26,7 +26,7 @@ function App() {
   const [allDoctors, setAllDoctors] = useState([])
   const [allPatients, setAllPatients] = useState([])
 
-
+  const navigate = useNavigate()
   /* Check if session exists */
   useEffect(() => {
     // auto-login
@@ -36,7 +36,7 @@ function App() {
       }
     });
 
-    // Get All Sessions
+    // Get All Specializations
     const specialization_response = DataFetch("/specializations", "GET")
     specialization_response.then(specializations => setSpecializations(specializations))
 
@@ -64,8 +64,8 @@ function App() {
       ).then((r) => {
         if (r.ok) {
           r.json().then((user) => setUser(user));
-          setErrors('')
-          setSuccess(`Welcome ${user.name}. Thank you for signing up!!`)
+          // setErrors('')
+          // setSuccess(`Welcome ${user.name}. Thank you for signing up!!`)
         }else{
           r.json().then((response) => setErrors(response.errors[0]))
         }
@@ -120,6 +120,45 @@ function App() {
     //After updating, update user state using setUser
   }
 
+  const onBookAppointment = (form_values) => {
+    form_values.patient_id = user['id']
+    const form_obj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form_values)
+    }
+    // Post appointments
+    fetch('/appointments', form_obj).then((r) => {
+      if(r.ok){
+        //update appointments in state
+        r.json().then((res) => {
+          const appointments = [...user.appointments, res]
+          delete user.appointments
+          const updated_user = {...user, appointments} 
+          setUser(updated_user)
+        })
+        setUser(user)
+        setSuccess("Booked Appointment successfully!!")
+
+      }else{
+        r.json().then((response) => setErrors(response.errors[0]))
+      }
+    })
+    
+
+  }
+
+  function handleLogoutClick(){
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+        if (r.ok) {
+          setUser(null);
+          navigate('/')
+        }
+      });
+  }
+
   
 
   return (
@@ -130,14 +169,14 @@ function App() {
       
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/signup' element={user ? <Dashboard user={user} setUser={setUser}/> : <SignUp onSignUp={onSignUp} specializations={specializations}/>} />
-        <Route path='/login' element={user ? <Dashboard user={user} setUser={setUser}/> : <Login onLogin={onLogin}/>} />
+        <Route path='/signup' element={<SignUp onSignUp={onSignUp} specializations={specializations}/>} />
+        <Route path='/login' element={<Login onLogin={onLogin}/>} />
         <Route path='/profile' element={user ? <Profile /> : <Login onLogin={onLogin}/>} />
-        <Route path='/dashboard' element={user ? <Dashboard user={user} setUser={setUser}/> : <Login onLogin={onLogin}/> }>
+        <Route path='/dashboard' element={user ? <Dashboard user={user} handleLogoutClick={handleLogoutClick} allDoctors={allDoctors} /> : <Login onLogin={onLogin}/> }>
           <Route path="profile" element={<Profile user={user} onEditUser={onEditUser} />} />
-          <Route path="book-appointment" element={<BookAppointment user={user} specializations={specializations} allDoctors={allDoctors} setSuccess={setSuccess} setErrors={setErrors}/>} />
+          <Route path="book-appointment" element={<BookAppointment user={user} specializations={specializations} allDoctors={allDoctors} onBookAppointment={onBookAppointment}/>} />
           <Route path="edit-appointment" element={<EditAppointment />} />
-          <Route path="doctors" element={<Doctors allDoctors={allDoctors}/>} />
+          <Route path="doctors" element={<Doctors allDoctors={allDoctors} allPatients={allPatients} />} />
           <Route path="health-stats" element={<HealthStats user={user} setUser={setUser} onEditUser={onEditUser}/>} />
         </Route>
         <Route path='/error404' element={<Error404 />} />

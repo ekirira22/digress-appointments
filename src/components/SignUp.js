@@ -27,7 +27,7 @@ export default function SignUp({onSignUp, specializations}){
         onSubmit : (values) => {
             onSignUp(values)
             formik.resetForm()
-            navigate('/dashboard')
+            navigate('/login')
         }
     })
     

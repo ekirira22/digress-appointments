@@ -22,7 +22,7 @@ export default function Doctors({allDoctors}){
                                                     <h3>{doctor.name}</h3>
                                                     <p>{doctor.specialization}</p>
                                                     <div className="team-contact-info">
-                                                        <p><i className="fa fa-map"></i> Location</p>
+                                                        <p><i className="fa fa-map"></i>{doctor.address}</p>
                                                         <p><i className="fa fa-envelope-o"></i> <a href="#">{doctor.email}</a></p>
                                                     </div>
                                                     <ul className="social-icon">
