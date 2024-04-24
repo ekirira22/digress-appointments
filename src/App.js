@@ -64,8 +64,7 @@ function App() {
       ).then((r) => {
         if (r.ok) {
           r.json().then((user) => setUser(user));
-          // setErrors('')
-          // setSuccess(`Welcome ${user.name}. Thank you for signing up!!`)
+          setSuccess(`Thank you for signing up!! Log in to access dashboard`)
         }else{
           r.json().then((response) => setErrors(response.errors[0]))
         }
