@@ -4,7 +4,7 @@ import userimg from '../images/testimonial-2.jpg'
 import Footer from "./Footer";
 import DataFetch from "./DataFetch";
 
-export default function Dashboard({user, handleLogoutClick, allDoctors}){
+export default function Dashboard({user, handleLogoutClick, allDoctors, allPatients}){
     const navigate = useNavigate()
     const [isDoctor, setDoctor] = useState(false)
     let app_doctor
@@ -27,6 +27,26 @@ export default function Dashboard({user, handleLogoutClick, allDoctors}){
                 return doctor[0].name
             }else if (field === "specialization"){
                 return doctor[0].specialization
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
+    const getPatientsInfo = (id, field) => {
+        try{
+            const patient = allPatients.filter((pat) => {
+                return pat.id === id
+            })
+            if(field === "name"){
+                return patient[0].name
+            }else if (field === "pulse_rate"){
+                return patient[0].pulse_rate
+            }else if (field === "blood_pressure"){
+                return patient[0].blood_pressure
+            }else if (field === "temparature"){
+                return patient[0].temparature
+            }else if (field === "blood_group"){
+                return patient[0].blood_group
             }
         }catch(error){
             console.log(error)
@@ -157,12 +177,21 @@ export default function Dashboard({user, handleLogoutClick, allDoctors}){
                                             <thead>
                                                 <tr>
                                                     <th scope="row">App.Nō</th>
-                                                    <th scope="col">Doctors' Name</th>
-                                                    <th scope="col">Treatment Area</th>
+                                                    {!isDoctor? <th scope="col">Doctors' Name</th> : <th scope="col">Patient's Name</th>}
+                                                    {!isDoctor? <th scope="col">Treatment Area</th> : null}
+                                                    {
+                                                        isDoctor ?
+                                                        <>
+                                                            <th scope="col">Pulse Rate</th>
+                                                            <th scope="col">Blood Pressure</th>
+                                                            <th scope="col">Temperature</th>
+                                                            <th scope="col">Blood Group</th>
+                                                        </> : null   
+
+                                                    }
                                                     <th scope="col">Patient's Note</th>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">Time</th>
-                                                    <th scope="col">Approved</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -171,12 +200,21 @@ export default function Dashboard({user, handleLogoutClick, allDoctors}){
                                                         return (
                                                             <tr key={app.id}>
                                                                 <th scope="row">00{app.id}</th>
-                                                                <td>{getDoctorsInfo(app.doctor_id, "name")}</td>
-                                                                <td>{getDoctorsInfo(app.doctor_id, "specialization")}</td>
+                                                                {!isDoctor ? <td>{getDoctorsInfo(app.doctor_id, "name")}</td> : <td>{getPatientsInfo(app.patient_id, "name")}</td>}
+                                                                {!isDoctor? <td>{getDoctorsInfo(app.doctor_id, "specialization")}</td> : null}
+                                                                {
+                                                                    isDoctor ?
+                                                                    <>
+                                                                        <td>{getPatientsInfo(app.patient_id, "pulse_rate")}bpm</td>
+                                                                        <td>{getPatientsInfo(app.patient_id, "blood_pressure")}mm/Hg</td>
+                                                                        <td>{getPatientsInfo(app.patient_id, "temparature")}°C</td>
+                                                                        <td>{getPatientsInfo(app.patient_id, "blood_group")}</td>
+                                                                    </> : null   
+
+                                                                }
                                                                 <td>{app.patient_note}</td>
                                                                 <td>{app.date}</td>
                                                                 <td>{app.time}</td>
-                                                                <td><i className="fa fa-check text-success text-right"></i></td>
                                                             </tr>
                                                         )
                                                     })
