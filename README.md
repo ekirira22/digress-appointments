@@ -9,7 +9,7 @@
 ## Installation 
   1. Git clone this repository to your working directory
   2. Download bootstrap dependencies. This project runs on bootsrap css and REACTjS
-  3. 
+  3. Run npm start to deploy the application on your local server
      
 ## Tech Stack
 HTML,Bootstrap CSS, React JS, Python, Flask, REST APIs
