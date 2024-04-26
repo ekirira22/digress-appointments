@@ -148,12 +148,12 @@ function App() {
 
   }
 
-  function handleLogoutClick(){
-    fetch("/logout", { method: "DELETE" }).then((r) => {
-        if (r.ok) {
-          setUser(null);
-          navigate('/')
-        }
+  async function handleLogoutClick(){
+    await fetch("/logout", { method: "DELETE" }).then((r) => {
+       
+        setUser(null);
+        navigate('/dashboard')
+
       });
   }
 
