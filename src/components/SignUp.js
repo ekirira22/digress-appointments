@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useFormik } from "formik"
 import { Input, Ripple, initMDB } from "mdb-ui-kit";
 import { Container } from 'react-bootstrap'
-import DataFetch from "./DataFetch";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 initMDB({ Input, Ripple });

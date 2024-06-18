@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../DigressEvents.png";
 import { Container, Nav, Navbar, Button, Offcanvas } from "react-bootstrap";
 
@@ -8,9 +8,6 @@ export default function NavBar({user}){
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    const navigate = useNavigate()
-
     
     return (
         <>

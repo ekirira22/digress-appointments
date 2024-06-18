@@ -1,9 +1,9 @@
 # Digress-Appointments
 ## Authors
-    1. Eric Maranga
-    2. Diana Tuei
-    3. Esther Wanjiku
-    4. Emily Matoke
+    1. Eric Maranga - Scrum Master / Lead
+    2. Diana Tuei 
+    3. Esther Wanjiku 
+    4. Emily Matoke 
     5. Elvis Momanyi
 
 ## Installation 
@@ -29,11 +29,17 @@ HTML,Bootstrap CSS, React JS, Python, Flask, REST APIs
 
 6. A Patient can edit their appointment / change the date of appointments
 
-### ADVANCED DELIVERABLES
 
 
-  
+## API Endpoints and Links
+Click link below to see API Data :
 
-## API Endpoint
-Click link below to see API Data
 [API LINK](https://digress-appointments-api.onrender.com/)
+
+1. /doctors - Shows you all doctors
+2. /patients - Shows you all patients
+3. /appointments - Shows you all existing appointments
+
+Click link below to see the live view :
+
+[LIVE LINK](https://digress-appointments.vercel.app/)

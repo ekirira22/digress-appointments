@@ -2,21 +2,18 @@ import {useEffect,useState}  from "react";
 import {Outlet, useNavigate } from "react-router-dom";
 import userimg from '../images/testimonial-2.jpg'
 import Footer from "./Footer";
-import DataFetch from "./DataFetch";
 
 export default function Dashboard({user, handleLogoutClick, allDoctors, allPatients}){
     const navigate = useNavigate()
     const [isDoctor, setDoctor] = useState(false)
-    let app_doctor
-    let specialization
-
+    
     useEffect(()=>{
         if (user['doctors_id']){
             setDoctor(true)
         }else{
             setDoctor(false)
         }
-    },[])
+    },[user])
 
     const getDoctorsInfo = (id, field) => {
         try{
@@ -52,7 +49,6 @@ export default function Dashboard({user, handleLogoutClick, allDoctors, allPatie
             console.log(error)
         }
     }
-
 
     return (
         

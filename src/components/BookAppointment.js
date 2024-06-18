@@ -31,7 +31,7 @@ export default function BookAppointment({specializations, allDoctors, onBookAppo
             return doctor.specialization === spec
         })
         setFilteredDoctors(filteredDoctors)
-    }, [spec])
+    }, [spec, allDoctors])
 
     return(
         <>

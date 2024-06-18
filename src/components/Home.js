@@ -1,4 +1,3 @@
-import { Carousel } from "react-bootstrap";
 import news1 from '../images/appointment-image.jpg' 
 import Footer from "./Footer";
 

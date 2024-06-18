@@ -9,7 +9,6 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile'
 import Error404 from './components/Error404';
-import Footer from "./components/Footer";
 import BookAppointment from "./components/BookAppointment";
 import DataFetch from "./components/DataFetch";
 import EditAppointment from "./components/EditAppointment"
