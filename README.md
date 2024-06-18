@@ -42,4 +42,4 @@ Click link below to see API Data :
 
 Click link below to see the live view :
 
-[LIVE LINK](https://digress-appointments.vercel.app/)
+[LIVE LINK](https://digress-appointments.primehosting.co.ke/)
