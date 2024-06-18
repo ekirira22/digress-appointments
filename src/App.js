@@ -14,6 +14,7 @@ import DataFetch from "./components/DataFetch";
 import EditAppointment from "./components/EditAppointment"
 import Doctors from "./components/Doctors"
 import HealthStats from "./components/HealthStats"
+import Loader from "./components/Loader";
 
 function App() {
   //Set Errors
@@ -169,7 +170,7 @@ function App() {
         <Route path='/signup' element={<SignUp onSignUp={onSignUp} specializations={specializations}/>} />
         <Route path='/login' element={<Login onLogin={onLogin}/>} />
         <Route path='/profile' element={user ? <Profile /> : <Login onLogin={onLogin}/>} />
-        <Route path='/dashboard' element={user ? <Dashboard user={user} handleLogoutClick={handleLogoutClick} allDoctors={allDoctors} allPatients={allPatients} /> : <Login onLogin={onLogin}/> }>
+        <Route path='/dashboard' element={user ? <Dashboard user={user} handleLogoutClick={handleLogoutClick} allDoctors={allDoctors} allPatients={allPatients} /> : <Loader /> }>
           <Route path="profile" element={<Profile user={user} onEditUser={onEditUser} />} />
           <Route path="book-appointment" element={<BookAppointment user={user} specializations={specializations} allDoctors={allDoctors} onBookAppointment={onBookAppointment}/>} />
           <Route path="edit-appointment" element={<EditAppointment />} />
