@@ -7,7 +7,7 @@ export default function Error404(){
                     Oops! The page you're 
                     looking for is not here. 
                 </p> 
-                <a href="http://localhost:3000/"> 
+                <a href="https://digress-appointments.primehosting.co.ke/"> 
                     Go Back to Home 
                 </a> 
             </div>

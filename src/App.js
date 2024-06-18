@@ -17,6 +17,8 @@ import HealthStats from "./components/HealthStats"
 import Loader from "./components/Loader";
 
 function App() {
+  //API Endpoint
+  const apiURL = process.env.REACT_APP_API_URL
   //Set Errors
   const [errors, setErrors] = useState('')
   const [success, setSuccess] = useState('')
@@ -30,32 +32,36 @@ function App() {
   /* Check if session exists */
   useEffect(() => {
     // auto-login
-    fetch("/check_session").then((r) => {
+    fetch(`${apiURL}/check_session`).then((r) => {
       if (r.ok) {
         r.json().then((user) => setUser(user));
       }
     });
 
     // Get All Specializations
-    const specialization_response = DataFetch("/specializations", "GET")
+    const specialization_response = DataFetch(`${apiURL}/specializations`, "GET")
     specialization_response.then(specializations => setSpecializations(specializations))
 
     //Get All Doctors
-    const doctors_response = DataFetch("/doctors", "GET")
+    const doctors_response = DataFetch(`${apiURL}/doctors`, "GET")
     doctors_response.then(doctors => setAllDoctors(doctors))
 
     //Get All Patients
-    const patients_response = DataFetch("/patients", "GET")
+    const patients_response = DataFetch(`${apiURL}/patients`, "GET")
     patients_response.then(patients => setAllPatients(patients))
 
 
   }, [user]);
 
-  // console.log(user)
+  console.log(user)
+  // console.log(specializations)
+  // console.log(allDoctors)
+  // console.log(allPatients)
+
 
   const onSignUp = (form_values) => {
       fetch(
-        "/signup",
+        `${apiURL}/signup`,
         {
           method: "POST",
           headers: {
@@ -73,7 +79,7 @@ function App() {
   }
   const onLogin = (form_values) => {
     fetch(
-      "/login",
+      `${apiURL}/login`,
       {
         method: "POST",
         headers: {
@@ -86,8 +92,6 @@ function App() {
         r.json().then((user) => setUser(user));
         setErrors('')
         setSuccess("Sucessfully logged in!")
-        navigate('/dashboard')
-
       }else{
         r.json().then((response) => setErrors(response.errors[0]))
       }
@@ -108,7 +112,7 @@ function App() {
 
     user['doctors_id'] ? user_type = "doctors" : user_type = "patients"
       
-    fetch( `/${user_type}/${user_now}`, form_obj).then(r => {
+    fetch( `${apiURL}/${user_type}/${user_now}`, form_obj).then(r => {
       if(r.ok){
         //set state
         const updated_user = {...user, ...form_values}
@@ -132,7 +136,7 @@ function App() {
       body: JSON.stringify(form_values)
     }
     // Post appointments
-    fetch('/appointments', form_obj).then((r) => {
+    fetch(`${apiURL}/appointments`, form_obj).then((r) => {
       if(r.ok){
         //update appointments in state
         r.json().then((res) => {
@@ -153,7 +157,7 @@ function App() {
   }
 
   async function handleLogoutClick(){
-    await fetch("/logout", { method: "DELETE" }).then((r) => {
+    await fetch(`${apiURL}/logout`, { method: "DELETE" }).then((r) => {
        
         setUser(null);
         navigate('/dashboard')
