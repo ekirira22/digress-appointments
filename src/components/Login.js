@@ -1,13 +1,10 @@
-import { useState } from "react";
 import { useFormik } from "formik"
 import { Input, Ripple, initMDB } from "mdb-ui-kit";
 import { Container } from 'react-bootstrap'
-import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 initMDB({ Input, Ripple });
 
 export default function Login({onLogin}){
-    const navigate = useNavigate()
     const formik = useFormik({
         enableReinitialize : true,
         initialValues : {
@@ -17,7 +14,6 @@ export default function Login({onLogin}){
         onSubmit : (values) => {
             onLogin(values)
             formik.resetForm()
-            navigate('/dashboard')
 
         }
     })

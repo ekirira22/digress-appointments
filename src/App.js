@@ -49,7 +49,9 @@ function App() {
     patients_response.then(patients => setAllPatients(patients))
 
 
-  }, []);
+  }, [user]);
+
+  // console.log(user)
 
   const onSignUp = (form_values) => {
       fetch(
@@ -84,6 +86,8 @@ function App() {
         r.json().then((user) => setUser(user));
         setErrors('')
         setSuccess("Sucessfully logged in!")
+        navigate('/dashboard')
+
       }else{
         r.json().then((response) => setErrors(response.errors[0]))
       }
