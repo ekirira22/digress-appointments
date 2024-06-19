@@ -38,8 +38,8 @@ Click link below to see API Data :
 
 1. /doctors - Shows you all doctors
 2. /patients - Shows you all patients
-3. /appointments - Shows you all existing appointments
+3. /specializations - Shows you all existing specializations
 
 Click link below to see the live view :
 
-[LIVE LINK](https://digress-appointments.primehosting.co.ke/)
+[LIVE LINK](https://digress-appointments.vercel.app/)
