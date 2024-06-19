@@ -32,11 +32,14 @@ function App() {
   /* Check if session exists */
   useEffect(() => {
     // auto-login
-    fetch(`${apiURL}/check_session`).then((r) => {
-      if (r.ok) {
-        r.json().then((user) => setUser(user));
-      }
-    });
+    // Quick Fix: Switched to client-side session management instead of server-side
+      // fetch(`${apiURL}/check_session`, { method: "GET" }).then((r) => {
+      //   if (r.ok) {
+      //     r.json().then((user) => setUser(user));
+      //   }
+      // });
+      const user = JSON.parse(localStorage.getItem('user_obj'))
+      setUser(user)
 
     // Get All Specializations
     const specialization_response = DataFetch(`${apiURL}/specializations`, "GET")
@@ -51,13 +54,9 @@ function App() {
     patients_response.then(patients => setAllPatients(patients))
 
 
-  }, [user]);
+  }, [apiURL]);
 
-  console.log(user)
-  // console.log(specializations)
-  // console.log(allDoctors)
-  // console.log(allPatients)
-
+  // console.log(apiURL)
 
   const onSignUp = (form_values) => {
       fetch(
@@ -89,7 +88,12 @@ function App() {
       }
     ).then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user));
+        r.json().then((user) => {
+          //Quick Fix: To client-side session management
+          localStorage.setItem('user_obj', JSON.stringify(user))
+          //Original Implementation: For server-side session management
+          setUser(user)
+        });
         setErrors('')
         setSuccess("Sucessfully logged in!")
       }else{
@@ -157,12 +161,16 @@ function App() {
   }
 
   async function handleLogoutClick(){
-    await fetch(`${apiURL}/logout`, { method: "DELETE" }).then((r) => {
-       
-        setUser(null);
-        navigate('/dashboard')
 
-      });
+    // Server-side session management
+    // await fetch(`${apiURL}/logout`, { method: "DELETE" }).then((r) => {
+    //     setUser(null);
+    //     navigate('/home')
+    //   });
+
+    //Remove user from localStorage session
+    localStorage.removeItem('user_obj')
+    setUser(null)
   }
 
   
