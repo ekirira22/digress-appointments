@@ -16,6 +16,9 @@ import Doctors from "./components/Doctors"
 import Patients from "./components/Patients"
 import HealthStats from "./components/HealthStats"
 import Loader from "./components/Loader";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Services from "./components/Services";
 
 function App() {
   //API Endpoint
@@ -200,6 +203,10 @@ function App() {
           <Route path="health-stats" element={<HealthStats user={user} setUser={setUser} onEditUser={onEditUser}/>} />
         </Route>
         <Route path='/error404' element={<Error404 />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/services' element={<Services />} />
       </Routes>
     </>
   );

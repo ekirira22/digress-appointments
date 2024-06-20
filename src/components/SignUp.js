@@ -39,36 +39,36 @@ export default function SignUp({onSignUp, specializations}){
                 <div className="row mb-4">
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input required type="text" name="name" value={formik.values.name} onChange={formik.handleChange} className="form-control" />
                             <label className="form-label" htmlFor="name">Full name</label>
+                            <input required type="text" name="name" value={formik.values.name} onChange={formik.handleChange} className="form-control" />
                         </div>
                     </div>
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input required type="text" name="username" value={formik.values.username} onChange={formik.handleChange} className="form-control" />
                             <label className="form-label" htmlFor="username">Alias /Username</label>
+                            <input required type="text" name="username" value={formik.values.username} onChange={formik.handleChange} className="form-control" />
                         </div>
                     </div>
                 </div>
 
                 {/* <!-- Email input --> */}
                 <div data-mdb-input-init className="form-outline mb-4">
-                    <input required type="email" name="email" value={formik.values.email} onChange={formik.handleChange} className="form-control" />
                     <label className="form-label" htmlFor="email">Email address</label>
+                    <input required type="email" name="email" value={formik.values.email} onChange={formik.handleChange} className="form-control" />
                 </div>
 
                 {/* <!-- Password input --> */}
                 <div className="row mb-4">
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input required type="password" name="password" value={formik.values.password} onChange={formik.handleChange} className="form-control" />
                             <label className="form-label" htmlFor="password">Password</label>
+                            <input required type="password" name="password" value={formik.values.password} onChange={formik.handleChange} className="form-control" />
                         </div>
                     </div>
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input required type="password" name="confirm_password" value={formik.values.confirm_password} onChange={formik.handleChange} className="form-control" />
                             <label className="form-label" htmlFor="confirm_password">Confirm Password </label>
+                            <input required type="password" name="confirm_password" value={formik.values.confirm_password} onChange={formik.handleChange} className="form-control" />
                         </div>
                     </div>
                 </div>
@@ -76,18 +76,18 @@ export default function SignUp({onSignUp, specializations}){
                 <div className="row mb-4">
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input type="text" name="address" value={formik.values.address} onChange={formik.handleChange} className="form-control" />
                             <label className="form-label" htmlFor="address">Address</label>
+                            <input type="text" name="address" value={formik.values.address} onChange={formik.handleChange} className="form-control" />
                         </div>
                     </div>
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
+                            <label className="form-label" htmlFor="gender">Gender</label>
                             <select required className="form-control form-select" name="gender" value={formik.values.gender} onChange={formik.handleChange}>
                                 <option defaultValue={'M'}>Select an option</option>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
                             </select>
-                            <label className="form-label" htmlFor="gender">Gender</label>
                         </div>
                     </div>
                 </div>
@@ -106,12 +106,13 @@ export default function SignUp({onSignUp, specializations}){
                     <div className="row mb-4">
                         <div className="col">
                             <div data-mdb-input-init className="form-outline">
-                                <input type="number" name="doctors_id" value={formik.values.doctors_id} onChange={formik.handleChange} className="form-control" />
                                 <label className="form-label" htmlFor="doctors_id">Doctor's ID / Practitioner ID</label>
+                                <input type="number" name="doctors_id" value={formik.values.doctors_id} onChange={formik.handleChange} className="form-control" />
                             </div>
                         </div>
                         <div className="col">
                             <div data-mdb-input-init className="form-outline">
+                                <label className="form-label" htmlFor="gender">Specialization</label>
                                 <select className="form-control form-select" name="specialization" value={formik.values.specialization} onChange={formik.handleChange}>
                                     <option defaultValue={''}>Select an option</option>
                                     {
@@ -122,7 +123,6 @@ export default function SignUp({onSignUp, specializations}){
                                         })
                                     }
                                 </select>
-                                <label className="form-label" htmlFor="gender">Specialization</label>
                             </div>
                         </div>
                     </div>

@@ -30,8 +30,8 @@ export default function Login({onLogin}){
                 <div className="row mb-4">
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input required type="text" name="username" value={formik.values.username} onChange={formik.handleChange} className="form-control" />
                             <label className="form-label" htmlFor="username">Alias /Username</label>
+                            <input required type="text" name="username" value={formik.values.username} onChange={formik.handleChange} className="form-control" />
                         </div>
                     </div>
                 </div>
@@ -40,8 +40,8 @@ export default function Login({onLogin}){
                 <div className="row mb-4">
                     <div className="col">
                         <div data-mdb-input-init className="form-outline">
-                            <input required type="password" name="password" value={formik.values.password} onChange={formik.handleChange} className="form-control" />
                             <label className="form-label" htmlFor="password">Password</label>
+                            <input required type="password" name="password" value={formik.values.password} onChange={formik.handleChange} className="form-control" />
                         </div>
                     </div>
                 </div>
