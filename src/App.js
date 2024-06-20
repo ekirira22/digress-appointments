@@ -13,6 +13,7 @@ import BookAppointment from "./components/BookAppointment";
 import DataFetch from "./components/DataFetch";
 import EditAppointment from "./components/EditAppointment"
 import Doctors from "./components/Doctors"
+import Patients from "./components/Patients"
 import HealthStats from "./components/HealthStats"
 import Loader from "./components/Loader";
 
@@ -121,6 +122,8 @@ function App() {
         //set state
         const updated_user = {...user, ...form_values}
         setUser(updated_user)
+        //Quick Fix: To client-side session management
+        localStorage.setItem('user_obj', JSON.stringify(updated_user))
 
         setSuccess("Updated successfully!!")
       }else{
@@ -148,6 +151,8 @@ function App() {
           delete user.appointments
           const updated_user = {...user, appointments} 
           setUser(updated_user)
+          //Quick Fix: To client-side session management
+          localStorage.setItem('user_obj', JSON.stringify(updated_user))
         })
         setUser(user)
         setSuccess("Booked Appointment successfully!!")
@@ -191,6 +196,7 @@ function App() {
           <Route path="book-appointment" element={<BookAppointment user={user} specializations={specializations} allDoctors={allDoctors} onBookAppointment={onBookAppointment}/>} />
           <Route path="edit-appointment" element={<EditAppointment />} />
           <Route path="doctors" element={<Doctors allDoctors={allDoctors} allPatients={allPatients} />} />
+          <Route path="patients" element={<Patients allDoctors={allDoctors} allPatients={allPatients} />} />
           <Route path="health-stats" element={<HealthStats user={user} setUser={setUser} onEditUser={onEditUser}/>} />
         </Route>
         <Route path='/error404' element={<Error404 />} />

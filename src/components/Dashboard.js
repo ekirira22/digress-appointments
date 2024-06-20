@@ -77,9 +77,8 @@ export default function Dashboard({user, handleLogoutClick, allDoctors, allPatie
                             <div className="nav-item dropdown">
                                 <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i className="fa fa-user me-2"></i>Patients</a>
                                 <div className="dropdown-menu bg-transparent border-0">
-                                    <a href="/dashboard/book-appointment" className="nav-link dropdown-item">All Patients</a>
-                                    <a href="typography.html" className="nav-link dropdown-item">Booked Appointments</a>
-                                    <a href="element.html" className="nav-link dropdown-item">Reschedule</a>
+                                    <a href="/dashboard/patients" className="nav-link dropdown-item">All Patients</a>
+                                    <a href="/dashboard/edit-appointment" className="nav-link dropdown-item">Reschedule</a>
                                 </div>
                             </div> : 
                             <div className="nav-item dropdown">
@@ -209,7 +208,7 @@ export default function Dashboard({user, handleLogoutClick, allDoctors, allPatie
 
                                                                 }
                                                                 <td>{app.patient_note}</td>
-                                                                <td>{app.date}</td>
+                                                                <td>{app.day}</td>
                                                                 <td>{app.time}</td>
                                                             </tr>
                                                         )

@@ -7,7 +7,7 @@ export default function EditAppointment(){
                         <div className="bg-light rounded h-100 p-4">
                             <h6 className="mb-4"><span className="db-header">Reschedule Appointment or Delete Appointment</span></h6>
                             <div className="table-responsive">
-                                <table className="table">
+                                {/* <table className="table">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -48,7 +48,8 @@ export default function EditAppointment(){
                                             <td><button className="btn btn-danger btn-sm">DELETE</button></td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table> */}
+                                Coming Soon ...
                             </div>
                         </div>
                     </div>
