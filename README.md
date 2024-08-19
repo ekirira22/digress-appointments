@@ -40,6 +40,6 @@ Click link below to see API Data :
 2. /patients - Shows you all patients
 3. /specializations - Shows you all existing specializations
 
-Click link below to see the live view :
+Click link below to see the live view on AWS Amplify:
 
-[LIVE LINK](https://digress-appointments.vercel.app/)
+[LIVE LINK](https://main.d3ki3n88opz9zp.amplifyapp.com/)
